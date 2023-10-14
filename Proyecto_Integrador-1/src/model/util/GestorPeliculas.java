@@ -3,19 +3,26 @@ package model.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import dominio.domain.Genero;
 import dominio.domain.Pelicula;
 
 
 public class GestorPeliculas {
 	
 	private static List<Pelicula> listaDePeliculas;
+	private static List<Genero> listaDeGeneros;
 	
 	static {
 		listaDePeliculas = new ArrayList<>();
+		listaDeGeneros = new ArrayList<>();
 	}
 
-	public static void agregarPelicula(Pelicula pelicula) {
+	public void agregarPelicula(Pelicula pelicula) {
 		listaDePeliculas.add(pelicula);
+	}
+	
+	public void agregarGeneros (Genero genero) {
+		listaDeGeneros.add(genero);
 	}
 	
 	public static Pelicula getPelicula(String titulo) {
@@ -32,23 +39,23 @@ public class GestorPeliculas {
 		return pelicula;
 	}
 	
-	public static Pelicula getCodigo(int codigo) {
-		Pelicula pelicula = null;
-		for(Pelicula p: listaDePeliculas) {
-			if(p.getCodigo()== codigo) {
-				pelicula = p;
-				System.out.println(p.toString());
+	public static Genero getGenero(String genero) {
+		Genero genero1 = null;
+		for(Genero g: listaDeGeneros) {
+			if(g.getGenero().contains(genero)) {
+				genero1 = g;
+				System.out.println(g.toString());
 			}else {
-				System.out.println("La pelicula con el codigo " + codigo + " no fue encontrada");
+				System.out.println("La pelicula con el genero " + genero + " no fue encontrada");
 			}
 		}
-		return pelicula;
+		return genero1;
 	}
 	
 	
 	public static void visualizarPeliculas() {
 		for(Pelicula p:listaDePeliculas) {
-			System.out.println(p.toString());
+			System.out.println(p);
 		}
 	}
 	

@@ -1,7 +1,5 @@
 package dominio.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Pelicula {
 	
@@ -20,34 +18,41 @@ public class Pelicula {
 	/**
 	 * URL de la pelicula
 	 */
-	private String URL;
+	private String url;
 	
-	/**
-	 * Lista de los generos de la pelicula
-	 */
-	private List<Genero> generos;
 	
 	/**
 	 * constructor por defecto
 	 */
 	
-	public Pelicula() {
-		generos = new ArrayList<>();
-	}
 	
 	/**
 	 * constructor parametrizado
 	 */
 	
-	public Pelicula(String titulo, String imagenPromocional, int codigo, String uRL) {
+	public Pelicula(String titulo, String imagenPromocional, int codigo, String url) {
 		this.titulo = titulo;
 		this.imagenPromocional = imagenPromocional;
 		this.codigo = codigo;
-		URL = uRL;
-		this.generos = new ArrayList<>();
+		this.url = url;
 	}
 	
 	
+	
+
+	public Pelicula(String titulo, int codigo) {
+		super();
+		this.titulo = titulo;
+		this.codigo = codigo;
+	}
+
+	
+
+	public Pelicula(String titulo) {
+		super();
+		this.titulo = titulo;
+	}
+
 	/**
 	 * get y set de titulo y codigo
 	 * @return
@@ -74,9 +79,7 @@ public class Pelicula {
 	 * permite agregar generos a la pelicula
 	 * @param string
 	 */
-	public void agregarGeneros (Genero genero) {
-		this.generos.add(genero);
-	}
+	
 
 	/**
 	 * metodo toString
@@ -85,6 +88,22 @@ public class Pelicula {
 	@Override
 	public String toString() {
 		return "Pelicula [titulo=" + titulo + ", codigo=" + codigo + "]";
+	}
+
+	public String getImagenPromocional() {
+		return imagenPromocional;
+	}
+
+	public void setImagenPromocional(String imagenPromocional) {
+		this.imagenPromocional = imagenPromocional;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setURL(String url) {
+		this.url = url;
 	}
 
 	

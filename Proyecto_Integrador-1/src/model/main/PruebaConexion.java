@@ -2,27 +2,24 @@ package model.main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import dao.DAO;
+import dao.imp.PeliculaDAOImp;
+import dominio.domain.Pelicula;
 
 public class PruebaConexion {
 	
 	public static void main(String[] args) {
 		
-		String driver = "com.mysql.cj.jdbc.Driver";
-		
-		String url = "jdbc:mysql://@localhost:3306/databaseintegrador";
-		Connection conexion = null;
-		
-		try {
-			Class.forName(driver);
-			
-			conexion = DriverManager.getConnection(url, "root", "joa55joa");
-			System.out.println("Conexion establecida");
-			conexion.close();
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		DAO<Pelicula, Integer> peliculaDAO = new PeliculaDAOImp();
+		Pelicula peliculaBuscada = peliculaDAO.buscarPorId(222);
+		if(peliculaBuscada!=null) {
+			System.out.println(peliculaBuscada);
+		}else {
+			System.out.println("La pelicula no existe con ese codigo");
 		}
-		
 	}
 }
