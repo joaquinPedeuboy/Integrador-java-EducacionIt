@@ -24,7 +24,9 @@ public class Pelicula {
 	/**
 	 * constructor por defecto
 	 */
-	
+	public Pelicula() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	/**
 	 * constructor parametrizado
@@ -75,11 +77,6 @@ public class Pelicula {
 		this.codigo = codigo;
 	}
 
-	/**
-	 * permite agregar generos a la pelicula
-	 * @param string
-	 */
-	
 
 	/**
 	 * metodo toString

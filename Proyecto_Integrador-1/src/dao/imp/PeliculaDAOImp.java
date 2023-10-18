@@ -15,6 +15,9 @@ import dominio.domain.Pelicula;
 
 public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 
+	/**
+	 * Implementa la búsqueda por codigo
+	 */
 	@Override
 	public Pelicula buscarPorId(Integer key) {
 		Pelicula peliculaBuscada =null;
@@ -49,6 +52,9 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 		return peliculaBuscada;
 	}
 
+	/**
+	 * Devuelve todas las peliculas
+	 */
 	@Override
 	public List<Pelicula> obtenerTodos() {
 		List<Pelicula> peliculas = new ArrayList<Pelicula>();
@@ -85,6 +91,9 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 	}
 
 
+	/**
+	 * Inserta peliculas
+	 */
 	@Override
 	public boolean insertar(Pelicula entidad) {
 		boolean isInsert = false;
@@ -109,6 +118,9 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 		return isInsert;
 	}
 
+	/**
+	 * Actualiza peliculas
+	 */
 	@Override
 	public void actualizar(Pelicula entidad) {
 		Connection conexion = getConexion();
@@ -133,7 +145,9 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 		
 	}
 		
-	
+	/**
+	 * Elimina peliculas
+	 */
 	@Override
 	public void eliminar(Pelicula entidad) {
 		Connection conexion = getConexion();
@@ -157,39 +171,75 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 		}
 	}
 
+	/**
+	 * Implementa la búsqueda por título
+	 */
+	
 	@Override
-	public Pelicula buscarPorNombre(Pelicula entidad) {
-		Pelicula peliculaBuscada =null;
-		Connection conexion = getConexion();
-		String sentenciaSQL = "SELECT * FROM pelicula WHERE titulo = " +entidad.getTitulo();
-		Statement objetoSentenciaSQL = null;
+	public Pelicula buscarPorTitulo(String tituloBuscado) {
+		Pelicula peliculaBuscada = null;
+	    Connection conexion = getConexion();
+	    String sentenciaSQL = "SELECT * FROM pelicula WHERE titulo=?";
+	    PreparedStatement objetoSentenciaSQL = null;
+
+	    try {
+	        objetoSentenciaSQL = conexion.prepareStatement(sentenciaSQL);
+	        objetoSentenciaSQL.setString(1, tituloBuscado); // Asignamos el título como parámetro
+
+	        ResultSet resultado = objetoSentenciaSQL.executeQuery();
+
+	        while (resultado.next()) {
+	            int codigo = resultado.getInt("codigo");
+	            String titulo = resultado.getString("titulo");
+
+	            peliculaBuscada = new Pelicula(titulo, codigo);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            objetoSentenciaSQL.close();
+	            conexion.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	    }
+
+	    return peliculaBuscada;
+        
+    }
+
+	/**
+	 * Pelicula peliculaBuscada =null;
+	Connection conexion = getConexion();
+	String sentenciaSQL = "SELECT * FROM pelicula WHERE titulo=?";
+	Statement objetoSentenciaSQL = null;
+	
+	try {
+		objetoSentenciaSQL = conexion.createStatement();
+		ResultSet resultado = objetoSentenciaSQL.executeQuery(sentenciaSQL);
 		
-		try {
-			objetoSentenciaSQL = conexion.createStatement();
-			ResultSet resultado = objetoSentenciaSQL.executeQuery(sentenciaSQL);
+		while(resultado.next()) {
+			int codigo = resultado.getInt("codigo");
+			String titulo = resultado.getString("titulo");
 			
-			while(resultado.next()) {
-				String titulo = resultado.getString("titulo");
-				
-				peliculaBuscada = new Pelicula(titulo);
-			}
+			peliculaBuscada = new Pelicula(titulo,codigo);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally {
+		try {
+			objetoSentenciaSQL.close();
+			conexion.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			try {
-				objetoSentenciaSQL.close();
-				conexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
 		
-		return peliculaBuscada;
 	}
 	
-
-	
+	return peliculaBuscada;
+	**/
 }

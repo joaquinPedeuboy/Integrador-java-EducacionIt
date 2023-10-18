@@ -15,7 +15,7 @@ public class PruebaConexion {
 	public static void main(String[] args) {
 		
 		DAO<Pelicula, Integer> peliculaDAO = new PeliculaDAOImp();
-		Pelicula peliculaBuscada = peliculaDAO.buscarPorId(222);
+		Pelicula peliculaBuscada = peliculaDAO.buscarPorTitulo("Arma");
 		if(peliculaBuscada!=null) {
 			System.out.println(peliculaBuscada);
 		}else {

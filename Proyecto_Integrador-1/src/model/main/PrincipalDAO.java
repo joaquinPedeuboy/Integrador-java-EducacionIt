@@ -1,5 +1,6 @@
 package model.main;
 
+import java.util.List;
 import java.util.Scanner;
 
 import dao.DAO;
@@ -7,6 +8,7 @@ import dao.imp.GeneroDAOImp;
 import dao.imp.PeliculaDAOImp;
 import dominio.domain.Genero;
 import dominio.domain.Pelicula;
+import model.util.GestorPeliculas;
 
 public class PrincipalDAO {
 	
@@ -18,7 +20,7 @@ public class PrincipalDAO {
 			System.out.println("----------MENU----------");
 			System.out.println("Buscador de Peliculas");
 			System.out.println("1-Por codigo");
-			System.out.println("1-Por titulo");
+			System.out.println("2-Por titulo");
 			System.out.println("\nIngrese una opción: ");
 			String opcionString = scanner.next();
 			try {
@@ -50,7 +52,11 @@ public class PrincipalDAO {
 			break;
 		}
 		case 2:{
-			System.out.println("Gracias por usar la aplicación.");
+			System.out.println("Ingrese el titulo a buscar");
+			String titulo = scanner.next();
+			DAO<Pelicula, Integer> peliculaDAO = new PeliculaDAOImp();
+			Pelicula peliculaBuscada = peliculaDAO.buscarPorTitulo(titulo);
+			System.out.println(peliculaBuscada);
 			break;
 		}
 	}

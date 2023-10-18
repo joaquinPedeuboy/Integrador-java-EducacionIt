@@ -10,6 +10,7 @@ import java.util.List;
 import dao.ConexionMySQLDB;
 import dao.DAO;
 import dominio.domain.Genero;
+import dominio.domain.Pelicula;
 
 public class GeneroDAOImp implements  ConexionMySQLDB, DAO<Genero, Integer>{
 
@@ -105,7 +106,7 @@ public class GeneroDAOImp implements  ConexionMySQLDB, DAO<Genero, Integer>{
 	}
 
 	@Override
-	public Genero buscarPorNombre(Genero entidad) {
+	public Genero buscarPorTitulo(String titulo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
