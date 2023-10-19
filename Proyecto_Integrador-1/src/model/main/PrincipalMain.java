@@ -12,9 +12,11 @@ public class PrincipalMain {
 	static {
 		GestorPeliculas gestor = new GestorPeliculas();
 		Pelicula peliculas = new Pelicula("Busqueda Implacable", "Imagen", 222, "Busqueda Implacable.com");
-		Genero genero = new Genero("Terror","Suspenso","Accion","Triller", peliculas);
+		Genero genero = new Genero("Terror", peliculas);
+		Genero genero1 = new Genero("Suspenso", peliculas);
 		gestor.agregarPelicula(peliculas);
 		gestor.agregarGeneros(genero);
+		gestor.agregarGeneros(genero1);
 	}
 		
 	public static void main(String[] args) {
@@ -62,14 +64,13 @@ public class PrincipalMain {
 			case 1:{
 				System.out.println("Ingrese el genero a buscar: ");
 				String busquedaGenero = scanner.next();
-				System.out.println("Todas las peliculas con el genero buscado");
 				GestorPeliculas.getGenero(busquedaGenero);
+				
 				break;
 			}
 			case 2:{
 				System.out.println("Ingrese el titulo a buscar: ");
 				String busquedaTitulo = scanner.nextLine();
-				System.out.println("Todas las peliculas con el titulo buscado");
 				GestorPeliculas.getPelicula(busquedaTitulo);
 				
 				break;
@@ -80,5 +81,43 @@ public class PrincipalMain {
 			
 			}
 		}
+			/**
+			public static void codigoDetalle(int opcion) {
+				Scanner scanner = new Scanner(System.in);
+				boolean esOpcionValida = true;
+				int opcion1=0;
+				do {
+					System.out.println("Desea ver el detalle completo de la pelicula buscada?");
+					System.out.println("1- Si");
+					System.out.println("2- No");
+					String opcionString = scanner.next();
+					try {
+						opcion1 = Integer.parseInt(opcionString);
+						if(opcion1 != 1 && opcion1!=2) {
+							System.err.println("Debe ingresar una opción válida");
+							esOpcionValida = false;
+						}else {
+							esOpcionValida=true;
+						}
+					}catch(Exception ex) {
+						System.err.println("Debe ingresar una opción válida");
+						esOpcionValida=false;
+					}
+					
+				}while(esOpcionValida!=true);
+				
+				switch(opcion) {
+				
+				case 1:{
+					GestorPeliculas.visualizarPeliculasCompleta();
+					break;
+				}
+				case 2:{
+					GestorPeliculas.visualizarPeliculasCompleta();
+					break;
+				}
+				}
+			}
+			**/
 }
 

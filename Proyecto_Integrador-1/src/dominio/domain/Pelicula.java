@@ -78,13 +78,10 @@ public class Pelicula {
 	}
 
 
-	/**
-	 * metodo toString
-	 */
-
 	@Override
 	public String toString() {
-		return "Pelicula [titulo=" + titulo + ", codigo=" + codigo + "]";
+		return "Pelicula [titulo=" + titulo + ", imagenPromocional=" + imagenPromocional + ", codigo=" + codigo
+				+ ", url=" + url + "]";
 	}
 
 	public String getImagenPromocional() {
@@ -103,6 +100,8 @@ public class Pelicula {
 		this.url = url;
 	}
 
-	
+	public String MostrarPelicula() {
+		return "Pelicula [titulo=" + titulo + ", codigo=" + codigo + "]";
+	}
 	
 }

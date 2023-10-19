@@ -30,9 +30,9 @@ public class GestorPeliculas {
 		for(Pelicula p: listaDePeliculas) {
 			if(p.getTitulo().contains(titulo)) {
 				pelicula = p;
-				System.out.println(p.toString());
-			}else {
-				System.out.println("La pelicula con el titulo " + titulo + " no fue encontrada");
+				System.out.println("Todas las peliculas con el titulo buscado");
+				System.out.println(p.MostrarPelicula());
+				System.out.println("------------   ----------");
 			}
 		}
 		
@@ -44,9 +44,9 @@ public class GestorPeliculas {
 		for(Genero g: listaDeGeneros) {
 			if(g.getGenero().contains(genero)) {
 				genero1 = g;
+				System.out.println("Todas las peliculas con el genero buscado: ");
 				System.out.println(g.toString());
-			}else {
-				System.out.println("La pelicula con el genero " + genero + " no fue encontrada");
+				System.out.println("------------   ----------");
 			}
 		}
 		return genero1;
@@ -56,8 +56,14 @@ public class GestorPeliculas {
 	public static void visualizarPeliculas() {
 		for(Pelicula p:listaDePeliculas) {
 			System.out.println(p);
+			System.out.println("------------   ----------");
 		}
 	}
 	
-	
+	public static void visualizarPeliculasCompleta() {
+		for(Pelicula p:listaDePeliculas) {
+			System.out.println(p.toString());
+			System.out.println("------------   ----------");
+		}
+	}
 }
