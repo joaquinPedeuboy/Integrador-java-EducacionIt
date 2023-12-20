@@ -286,37 +286,7 @@ public class PrincipalDAO {
 			            System.out.println();
 			        }
 			    } while (esNombreValido!=true);
-				
-				//Cambio de codigo
-//				int codigoPelicula = 0;
-//				boolean esCodigoValido2;
-//				
-//				do {
-//					try {
-//					System.out.print("Ingrese el nuevo codigo de la pelicula: ");
-//					codigoPelicula = scanner.nextInt();
-//					if(codigoPelicula<0) {
-//						esCodigoValido2=false;
-//						System.out.println("Debe ingresar un codigo valido para la pelicula");
-//						
-//					}else {
-//						boolean codigoExiste = peliculaDAO.verificarCodigo(codigoPelicula);
-//						if (codigoExiste) {
-//			                esCodigoValido2 = false;
-//			                System.out.println("El código ya existe. Ingrese un código único.");
-//			            } else {
-//			                esCodigoValido2 = true;
-//			                System.out.println("Se cambió el código de la película");
-//			                System.out.println();
-//			            }
-//					}
-//					}catch (InputMismatchException  e) {
-//						System.err.println("El codigo no puede ser un numero negativo: ");
-//						esCodigoValido2=false;
-//						scanner.next();
-//					}
-//				}while(esCodigoValido2!=true);
-				
+								
 				//Cambio de imagen
 				
 				String nombreImagen;
