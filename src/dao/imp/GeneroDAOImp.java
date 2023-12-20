@@ -18,29 +18,6 @@ public class GeneroDAOImp implements  ConexionMySQLDB, DAO<Genero, Integer>{
 
 	@Override
 	public boolean insertar(Genero entidad) {
-//		boolean isInsert = false;
-//		Connection conexion = getConexion();
-//		String sentenciaSQL = "INSERT INTO genero (nombre_genero) VALUES (?)";
-//		PreparedStatement objetoSentenciaSQL;
-//		try {
-//			objetoSentenciaSQL=conexion.prepareStatement(sentenciaSQL, PreparedStatement.RETURN_GENERATED_KEYS);
-//			objetoSentenciaSQL.setString(1, entidad.getGenero());
-//			int result = objetoSentenciaSQL.executeUpdate();
-//			if(result==1) {
-//				ResultSet rs = objetoSentenciaSQL.getGeneratedKeys();
-//				if (rs.next()) {
-//					return rs.getInt(1);
-//				}
-//				isInsert=true;
-//			}
-//			//objetoSentenciaSQL.close();
-//			//conexion.close();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//			
-//		return isInsert;
 		return true;
 	}
 
@@ -54,6 +31,31 @@ public class GeneroDAOImp implements  ConexionMySQLDB, DAO<Genero, Integer>{
 	public void eliminar(Genero entidad) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Genero buscarPorTitulo(String titulo) {
+		
+		return null;
+	}
+	
+
+	@Override
+	public Genero buscarPorCodigo(Integer key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Genero buscarPorGenero(String generoBuscado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public boolean verificarCodigo(int key) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**
@@ -127,56 +129,6 @@ public class GeneroDAOImp implements  ConexionMySQLDB, DAO<Genero, Integer>{
 		
 		return generos;
 	}
-
-	@Override
-	public Genero buscarPorTitulo(String titulo) {
-		
-		return null;
-	}
-
-
-
-
-//		Genero generoBuscado1 = null;
-//	    Connection conexion = getConexion();
-//	    String sentenciaSQL = "SELECT * FROM genero G, pelicula PE WHERE G.nombre_genero=PE.genero_gen_id";
-//	    PreparedStatement objetoSentenciaSQL = null;
-//
-//	    try {
-//	        objetoSentenciaSQL = conexion.prepareStatement(sentenciaSQL);
-//	        objetoSentenciaSQL.setString(1, generoBuscado); // Asignamos el genero como parámetro
-//
-//	        ResultSet resultado = objetoSentenciaSQL.executeQuery();
-//
-//	        while (resultado.next()) {
-//	        	int idGenero = resultado.getInt("gen_id");
-//	        	generoBuscado1 = new Genero(idGenero);
-//	        }
-//	    } catch (SQLException e) {
-//	        e.printStackTrace();
-//	    } finally {
-//	        try {
-//	            objetoSentenciaSQL.close();
-//	            conexion.close();
-//	        } catch (SQLException e) {
-//	            e.printStackTrace();
-//	        }
-//
-//	    }
-//
-//	    return generoBuscado1;
-
-	@Override
-	public Genero buscarPorCodigo(Integer key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Genero buscarPorGenero(String generoBuscado) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	/**
 	 * Obtenemos o insertamos el genero si no existe
@@ -192,14 +144,17 @@ public class GeneroDAOImp implements  ConexionMySQLDB, DAO<Genero, Integer>{
 		return new Genero(nombre, idGenero);
 	}
 	
-	//Obtenemos el ID
+	/**
+	 * Obtenemos el ID
+	 * @param nombre
+	 * @return
+	 * @throws SQLException
+	 */
 	private int obtenerId(String nombre) throws SQLException{
-		String sentenciaSQL = "SELECT gen_id FROM genero WHERE nombre_genero=?";
-		Connection conexion = getConexion();
-	    PreparedStatement objetoSentenciaSQL = null;
 
-	    try {
-	        objetoSentenciaSQL = conexion.prepareStatement(sentenciaSQL);
+	    try (Connection conexion = getConexion();
+	    		PreparedStatement objetoSentenciaSQL = conexion.prepareStatement("SELECT gen_id FROM genero WHERE nombre_genero=?");){
+	    	
 	        objetoSentenciaSQL.setString(1, nombre);
 	        
 	        ResultSet result = objetoSentenciaSQL.executeQuery();
@@ -212,25 +167,20 @@ public class GeneroDAOImp implements  ConexionMySQLDB, DAO<Genero, Integer>{
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return -1; // Devolver un valor indicativo de error
-	    } finally {
-	        // Cerrar el objeto PreparedStatement en el bloque finally
-	        if (objetoSentenciaSQL != null) {
-	            try {
-	                objetoSentenciaSQL.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
 	    }
 	}
 	
-	//Insertamos el genero
+	/**
+	 * Insertamos el genero
+	 * @param nombre
+	 * @return
+	 * @throws SQLException
+	 */
 	private int insertarGen(String nombre) throws SQLException{
-		String sentenciaSQL = "INSERT INTO genero (nombre_genero) VALUES (?)";
-		Connection conexion = getConexion();
 		
-		try {
-			PreparedStatement objetoSentenciaSQL = conexion.prepareStatement(sentenciaSQL, PreparedStatement.RETURN_GENERATED_KEYS);
+		try (Connection conexion = getConexion();
+				PreparedStatement objetoSentenciaSQL = conexion.prepareStatement("INSERT INTO genero (nombre_genero) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS);){
+			
 	        objetoSentenciaSQL.setString(1, nombre);
 	        
 	        int ins = objetoSentenciaSQL.executeUpdate();
@@ -247,16 +197,6 @@ public class GeneroDAOImp implements  ConexionMySQLDB, DAO<Genero, Integer>{
 	        e.printStackTrace();
 	        return -1;
 	    }
-	}
-
-	@Override
-	public boolean verificarCodigo(int key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	
-		
+	}		
 }	
 

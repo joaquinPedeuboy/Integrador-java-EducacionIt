@@ -9,6 +9,9 @@ public class Genero{
 	 */
 	private String genero;
 	
+	/**
+	 * id del genero
+	 */
 	private int id;
 	
 

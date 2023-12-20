@@ -27,6 +27,12 @@ import dominio.domain.Pelicula;
 import model.util.GestorArchivos;
 
 public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
+	
+	@Override
+	public Pelicula obtenerOInsertarGenero(String nombre) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * Implementa la búsqueda por codigo
@@ -34,11 +40,10 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 	@Override
 	public Pelicula buscarPorId(Integer key) {
 		Pelicula peliculaBuscada =null;
-		Connection conexion = getConexion();
-		String sentenciaSQL = "SELECT * FROM pelicula WHERE genero_gen_id=?";
 		
-		try {
-			PreparedStatement objectSentenceSQL=conexion.prepareStatement(sentenciaSQL);
+		try (Connection conexion = getConexion();
+			PreparedStatement objectSentenceSQL=conexion.prepareStatement("SELECT * FROM pelicula WHERE genero_gen_id=?");){
+			
 			objectSentenceSQL.setInt(1, key);
 			ResultSet result = objectSentenceSQL.executeQuery();
 			while(result.next()) {
@@ -62,13 +67,10 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 	@Override
 	public List<Pelicula> obtenerTodos() {
 		List<Pelicula> peliculas = new ArrayList<Pelicula>();
-		Connection conexion = getConexion();
-		String sentenciaSQL = "SELECT * FROM pelicula";
-		Statement objetoSentenciaSQL = null;
 		
-		try {
-			objetoSentenciaSQL = conexion.createStatement();
-			ResultSet resultado = objetoSentenciaSQL.executeQuery(sentenciaSQL);
+		try(Connection conexion = getConexion();
+			PreparedStatement objetoSentenciaSQL = conexion.prepareStatement("SELECT * FROM pelicula");){
+			ResultSet resultado = objetoSentenciaSQL.executeQuery();
 			
 			while(resultado.next()) {
 				int codigo = resultado.getInt("codigo");
@@ -80,15 +82,6 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			try {
-				objetoSentenciaSQL.close();
-				conexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
 		
 		return peliculas;
@@ -158,32 +151,6 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 	        e.printStackTrace();
 	    }
 	}
-//	public void actualizar(Pelicula entidad) {	
-//		try (Connection conexion = getConexion();
-//	        PreparedStatement objetoSentenciaSQL = conexion.prepareStatement("UPDATE pelicula SET titulo=?, imagen_promocional=?, URL=?, genero_gen_id=? WHERE codigo=?");
-//			InputStream inputStream = new FileInputStream(entidad.getImagenPromocional()); ){
-//				
-//				objetoSentenciaSQL.setString(1, entidad.getTitulo());
-//		        objetoSentenciaSQL.setInt(2, entidad.getCodigo());
-//		        objetoSentenciaSQL.setBlob(3, inputStream);
-//		        objetoSentenciaSQL.setString(4, entidad.getUrl());
-//		        objetoSentenciaSQL.setInt(5, entidad.getGenero().getId());
-//		        int result = objetoSentenciaSQL.executeUpdate();
-//		        
-//				objetoSentenciaSQL.close();
-//				conexion.close();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			
-//		} catch (FileNotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//	}
 		
 	/**
 	 * Elimina peliculas
@@ -217,14 +184,11 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 	@Override
 	public Pelicula buscarPorTitulo(String tituloBuscado) {
 		Pelicula peliculaBuscada = null;
-	    Connection conexion = getConexion();
-	    String sentenciaSQL = "SELECT * FROM pelicula WHERE titulo=?";
-	    PreparedStatement objetoSentenciaSQL = null;
 	    String nombreUnico = UUID.randomUUID().toString();
 		String rutaImagenPromocional = System.getProperty("user.dir") + File.separator + "recursos" + File.separator + "imagenes" + File.separator + nombreUnico;
 		
-	    try {
-	        objetoSentenciaSQL = conexion.prepareStatement(sentenciaSQL);
+	    try (Connection conexion = getConexion();
+	    		PreparedStatement objetoSentenciaSQL = conexion.prepareStatement("SELECT * FROM pelicula WHERE titulo=?");){
 	        objetoSentenciaSQL.setString(1, tituloBuscado); // Asignamos el título como parámetro
 
 	        ResultSet resultado = objetoSentenciaSQL.executeQuery();
@@ -329,12 +293,6 @@ public class PeliculaDAOImp implements ConexionMySQLDB, DAO<Pelicula, Integer>{
 		}
 		
 		return peliculaBuscada;
-	}
-
-	@Override
-	public Pelicula obtenerOInsertarGenero(String nombre) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
